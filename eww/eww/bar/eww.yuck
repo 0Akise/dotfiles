@@ -1,0 +1,357 @@
+;; Logo Widget
+(defpoll icon_logo :interval "1h" "bash scripts/apps.sh --get-logo-icon")
+(defwidget widget_logo []
+    (box
+        :class "widget-logo"
+        :spacing-evenly "false"
+        (button
+            :class "icon-logo"
+            (label
+                :text icon_logo
+                :valign "center"
+                :halign "start"
+                )
+            )
+        )
+    )
+
+;; Apps Widget
+(defpoll icon_term :interval "1h" "bash scripts/apps.sh --get-term-icon")
+(defpoll icon_brws :interval "1h" "bash scripts/apps.sh --get-brws-icon")
+(defpoll icon_file :interval "1h" "bash scripts/apps.sh --get-file-icon")
+(defpoll icon_calc :interval "1h" "bash scripts/apps.sh --get-calc-icon")
+(defwidget widget_apps []
+    (box
+        :class "widget-apps"
+        :orientation "v"
+        :space-evenly "true"
+        (button
+            :onclick "bash scripts/apps.sh --term"
+            (label
+                :text icon_term
+                :valign "center"
+                :halign "start"
+                )
+            )
+        (button
+            :onclick "bash scripts/apps.sh --brws"
+            (label
+                :text icon_brws
+                :valign "center"
+                :halign "start"
+                )
+            )
+        (button
+            :onclick "bash scripts/apps.sh --file"
+            (label
+                :text icon_file
+                :valign "center"
+                :halign "start"
+                )
+            )
+        (button
+            :onclick "bash scripts/apps.sh --calc"
+            (label
+                :text icon_calc
+                :valign "center"
+                :halign "start"
+                )
+            )
+        )
+    )
+
+;; Top Wrapper ===
+(defwidget wrapper_top []
+    (box
+        :orientation "v"
+        :space-evenly "false"
+        :valign "start"
+        (widget_logo)
+        (widget_apps)
+        )
+    )
+
+;; Workspaces Widget
+(deflisten workspaces :initial "(button (label :text \"󰬺\"))" "python3 scripts/workspaces.py")
+(defwidget widget_workspace []
+    (box
+        :class "widget-workspace"
+        (literal
+            :class "icon-workspace"
+            :content "${workspaces}"
+            )
+        )
+    )
+
+;; Spacer Widget
+(defwidget widget_spacer []
+    (box
+        :class "widget-spacer"
+        (button)
+        )
+    )
+
+;; Middle Wrapper ===
+(defwidget wrapper_middle []
+    (box
+        :orientation "v"
+        :space-evenly "false"
+        :valign "middle"
+        (widget_spacer)
+        (widget_workspace)
+        )
+    )
+
+
+;; Battery Widget
+(defvar popup_battery false)
+(defpoll info_battery :interval "1s" "bash scripts/battery.sh --get-info")
+(defpoll icon_battery :interval "1s" "bash scripts/battery.sh --get-icon")
+(defwidget widget_battery []
+    (box
+        :class "widget-battery"
+        :orientation "v"
+        :tooltip "Battery: ${info_battery}%"
+        (button
+            :class "icon-battery"
+            (label
+                :valign "center"
+                :halign "center"
+                :text icon_battery
+                )
+            )
+        )
+    )
+
+;; Wifi Widget
+(defvar popup_wifi false)
+(defpoll info_wifi :interval "1s" "bash scripts/wifi.sh --get-info")
+(defpoll icon_wifi :interval "1s" "bash scripts/wifi.sh --get-icon")
+(defwidget widget_wifi []
+    (eventbox
+        :onclick ""
+        (box
+            :class "widget-wifi"
+            :orientation "v"
+            :tooltip info_wifi
+            (button
+                :class "icon-wifi"
+                (label
+                    :valign "center"
+                    :halign "center"
+                    :text icon_wifi
+                    )
+                )
+            )
+        )
+    )
+
+;; Backlight Widget
+(defvar popup_backlight false)
+(defpoll info_backlight :interval "1s" "bash scripts/backlight.sh --get-backlight")
+(defpoll icon_backlight :interval "1s" "bash scripts/backlight.sh --get-icon")
+(defwidget widget_backlight []
+    (eventbox
+        :onclick ""
+        (box
+            :class "widget-backlight"
+            :orientation "v"
+            :tooltip info_backlight
+            (button
+                :class "icon-backlight"
+                (label
+                    :valign "center"
+                    :halign "center"
+                    :text icon_backlight
+                    )
+                )
+            )
+        )
+    )
+
+;; Mic Widget
+(defvar popup_mic false)
+(defpoll info_mic :interval "1s" "bash scripts/mic.sh --get-mic")
+(defpoll icon_mic :interval "1s" "bash scripts/mic.sh --get-icon")
+(defwidget widget_mic []
+    (eventbox
+        :onclick ""
+        (box
+            :class "widget-mic"
+            :orientation "v"
+            :tooltip info_mic
+            (button
+                :class "icon-mic"
+                (label
+                    :valign "center"
+                    :halign "center"
+                    :text icon_mic
+                    )
+                )
+            )
+        )
+    )
+
+;; Volume Widget
+(defvar popup_volume false)
+(defpoll info_volume :interval "1s" "bash scripts/volume.sh --get-volume")
+(defpoll icon_volume :interval "1s" "bash scripts/volume.sh --get-icon")
+(defwidget widget_volume []
+    (eventbox
+        :onclick ""
+        (box
+            :class "widget-volume"
+            :orientation "v"
+            :tooltip info_volume
+            (button
+                :class "icon-volume"
+                (label
+                    :valign "center"
+                    :halign "center"
+                    :text icon_volume
+                    )
+                )
+            )
+        )
+    )
+
+
+;; Controls Wrapper ===
+(defwidget widget_control []
+    (box
+        :class "widget-control"
+        :orientation "v"
+        :space-evenly "false"
+        (widget_battery)
+        (widget_wifi)
+        (widget_backlight)
+        (widget_mic)
+        (widget_volume)
+        )
+    )
+
+;; Clock Widget
+(defpoll hour :interval "1s" "date '+%H'")
+(defpoll minute :interval "1s" "date '+%M'")
+(defwidget widget_clock_hour []
+    (box
+        :class "widget-clock-hour"
+        (button
+            :class "clock-hour"
+            :onclick "bash scripts/popup.sh --calendar"
+            (label
+                :valign "center"
+                :halign "center"
+                :text hour
+                )
+            )
+        )
+    )
+
+(defwidget widget_clock_minute []
+    (box
+        :class "widget-clock-minute"
+        (button
+            :class "clock-minute"
+            :class "bash scripts/popup.sh --calendar"
+            (label
+                :valign "center"
+                :halign "center"
+                :text minute
+                )
+            )
+        )
+    )
+
+(defwidget widget_clock []
+    (box
+        :class "widget-clock"
+        :orientation "v"
+        (widget_clock_hour)
+        (widget_clock_minute)
+        )
+    )
+
+;; Powermenu Widget
+(defvar popup_powermenu false)
+(defpoll icon_powermenu :interval "1s" "bash scripts/powermenu.sh --get-icon")
+(defwidget widget_powermenu []
+    (eventbox
+        :onclick ""
+        (box
+            :class "widget-powermenu"
+            :orientation "v"
+            :space-evenly "false"
+            :vexpand "false"
+            (button
+                :class "icon-powermenu"
+                (label
+                    :valign "center"
+                    :halign "center"
+                    :text icon_powermenu
+                    )
+                )
+            )
+        )
+    )
+
+;; Bottom Wrapper ===
+(defwidget wrapper_bottom []
+    (box
+        :orientation "v"
+        :space-evenly "false"
+        :valign "end"
+        (widget_control)
+        (widget_clock)
+        (widget_powermenu)
+        )
+    )
+
+;; Main Bar ======
+(defwindow bar
+    :monitor 0
+    :windowtype "dock"
+    :geometry (geometry :width "35px" :height "95%" :anchor "center right" )
+    :exclusive "true"
+    (box
+        :class "bar"
+        :orientation "v"
+        :vexpand "false"
+        :hexpand "false"
+        :spcae-evenly "false"
+        (wrapper_top)
+        (wrapper_middle)
+        (wrapper_bottom)
+        )
+    )
+
+;; Popup Menus =========
+;; Calendar Widget
+(defpoll cal_day   :interval "1m" "bash scripts/calendar.sh --get-day")
+(defpoll cal_month :interval "1m" "bash scripts/calendar.sh --get-month")
+(defpoll cal_year  :interval "1m" "bash scripts/calendar.sh --get-year")
+(defwidget widget_calendar []
+    (box
+        :class "widget-calendar"
+        :orientation "v"
+        (box
+            :class "widget-calendar-inner"
+            (calendar
+                :class "calendar"
+                :day cal_day
+                :month cal_month
+                :year cal_year
+                )
+            )
+        )
+    )
+
+;; Calendar Window ======
+(defwindow window_calendar
+    :monitor 0
+    :windowtype "dock"
+    :focusable "false"
+    :geometry (geometry :x "79%" :y "67%")
+    (widget_calendar)
+    )
+

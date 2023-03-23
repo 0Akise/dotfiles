@@ -1,0 +1,137 @@
+$background1: #1a1b26;
+$background2: #24283b;
+$text: #9aa5ce;
+
+$red: #f7768e;
+$orange: #ff9e64;
+$yellow: #e0af68;
+$green: #9ece6a;
+$terquo: #73daca;
+$lblue: #b4f9f8;
+$cyan: #7dcfff;
+$dblue: #7aa2f7;
+$purple: #bb9af7;
+
+* {
+    all: unset;
+    font-family: "JetBrains Mono Nerd Font";
+}
+
+.bar {
+    background-color: $background1;
+    border-radius: 20px;
+    padding: 3px;
+}
+
+.widget-logo {
+    font-size: 1.4em;
+    color: $cyan;
+
+    background-color: $background2;
+    border-radius: 20px;
+    margin: 0 0 .3rem 0;
+    padding: 0 .7rem 0 .35rem;
+}
+
+.widget-apps {
+    font-family: "Font Awesome 6 Free";
+    font-size: 1.2em;
+    color: $text;
+
+    background-color: $background2;
+    border-radius: 5px;
+    margin: 0 0 .3rem 0;
+    padding: .3rem .3rem .3rem .42rem;
+}
+
+.widget-workspace {
+    font-size: 1.3em;
+    color: $text;
+
+    background-color: $background2;
+    border-radius: 5px;
+    margin: 6.5rem 0 0 0;
+    padding: .5rem 0 .5rem 0;
+}
+
+.widget-battery,
+.widget-wifi,
+.widget-backlight,
+.widget-mic,
+.widget-volume {
+    font-size: 1em;
+    color: $text;
+}
+
+.icon-battery {
+    color: $green;
+    padding: .1rem 0 .1rem 0;
+}
+
+.icon-wifi {
+    color: $terquo;
+    padding: .1rem .3rem .1rem 0;
+}
+
+.icon-backlight {
+    color: $yellow;
+    padding: .1rem .3rem .1rem 0;
+}
+
+.icon-mic {
+    color: $red;
+    padding: .1rem 0 .1rem 0;
+}
+
+.icon-volume {
+    color: $orange;
+    padding: .1rem .1rem .1rem 0;
+}
+
+.widget-control {
+    background-color: $background2;
+    border-radius: 5px;
+    margin: 0 0 .3rem 0;
+    padding: .5rem 0 .5rem 0;
+}
+
+.widget-clock {
+    background-color: $background2;
+    border-radius: 5px;
+    margin: 0 0 .3rem 0;
+    padding: .5rem 0 .5rem 0;
+}
+
+.widget-powermenu {
+    background-color: $background2;
+    border-radius: 20px;
+    margin: 0 0 0 0;
+    padding: .4rem .35rem .3rem 0;
+}
+
+// Popup windows
+.widget-calendar {
+    font-size: .8em;
+    color: $cyan;
+
+    background-color: $background2;
+    border-radius: 20px;
+    border: solid;
+    border-color: $cyan;
+    border-width: 2px;
+    .widget-calendar-inner {
+        padding: .8rem .3rem 0rem .3rem;
+
+        .calendar {
+            &.highlight {
+                padding: 1rem;
+            }
+            
+            padding: .3rem;
+        }
+    }
+}
+
+calendar:selected {
+    color: $red;
+}
